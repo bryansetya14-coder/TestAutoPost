@@ -1,0 +1,38 @@
+import asyncio
+from discord.ext import commands
+
+bot = commands.Bot(command_string="!", self_bot=True)
+
+MESSAGE = """SELL CHEAP GO <:Arrow:850540193626193941> FKFVH <:Verified:1000267030550827128>  
+
+- Punch Jammer / 13 <:WL:880251447470596157>  
+- Zombie Jammer / 13 <:WL:880251447470596157>  
+- Signal jammer / 2 <:WL:880251447470596157>  
+- Firehouse / 12 <:WL:880251447470596157>  
+- Door Mover / 6 <:WL:880251447470596157>  
+
+SELL CHEAP GO <:Arrow:850540193626193941> FKFVH <:Verified:1000267030550827128>"""
+
+
+@bot.event
+async def on_ready():
+  print(f"Bot 1 Logged in as {bot.user}")
+  bot.loop.create_task(auto_post())
+
+
+async def auto_post():
+  await bot.wait_until_ready()
+  channel_id = 123456789012345678  # Ganti dengan ID channel tujuanmu
+
+  while not bot.is_closed():
+    channel = bot.get_channel(channel_id)
+    if channel:
+      try:
+        await channel.send(MESSAGE)
+        print("Bot 1: Pesan 1 terkirim!")
+      except Exception as e:
+        print(f"Error: {e}")
+    await asyncio.sleep(7200)  # Jeda 2 jam
+
+
+bot.run("MASUKKAN_TOKEN_DISCORD_MU")
